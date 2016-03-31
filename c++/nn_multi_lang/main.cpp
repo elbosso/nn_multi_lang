@@ -19,7 +19,7 @@ int main()
 		network.init(10000,1.0,0.001,13,0.01);
 		int i=0;
 		int plotinterval=2000;
-				SvgRenderer::outNodes("neuralgas",0,network.getNodes());
+				SvgRenderer<neuralgas::Node>::outNodes(string("neuralgas"),0,network.getNodes());
 		for(;i<10000;++i)
 		{
  //           cout << i << endl;
@@ -28,7 +28,7 @@ int main()
 			network.learn(sample);
 			 cout << i<< " " <<network.getNodes()[0].getFeatures()[0] << endl;
 			if((i+1)%plotinterval==0)
-				SvgRenderer::outNodes("neuralgas",i+1,network.getNodes());
+				SvgRenderer<neuralgas::Node>::outNodes(string("neuralgas"),i+1,network.getNodes());
 		}
 //		JFreeChartRenderer.outNodes("neuralgas",i+1,java.util.Arrays.asList(network.getNodes()));
 
