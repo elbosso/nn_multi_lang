@@ -7,7 +7,7 @@ class FeatureRepresentation:
 	def __init__(self,features):
 		self.features=features
 		self.id=FeatureRepresentation.runningnumber
-		++FeatureRepresentation.runningnumber
+		FeatureRepresentation.runningnumber=FeatureRepresentation.runningnumber+1
 
 	def getId(self):
 		return self.id
