@@ -1,3 +1,6 @@
+#ifndef NN_H
+#define NN_H
+
 #include<iostream>
 #include<vector>
 //only c++11
@@ -44,3 +47,4 @@ namespace nn
             static void generateSample(std::vector<double> &features);
     };
 }
+#endif
