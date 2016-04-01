@@ -16,7 +16,7 @@ class SvgRenderer:
     def outNodes(self, basename, steps, features):
         tempd=tempfile.gettempdir();
         tempf=tempd+os.sep+basename+'_'+steps+'.svg'
-        print tempf
+#        print tempf
         svg = xml.etree.ElementTree.Element('svg')
         svg.set('xmlns:svg','http://www.w3.org/2000/svg')
         svg.set('xmlns','http://www.w3.org/2000/svg')
@@ -35,6 +35,28 @@ class SvgRenderer:
         text_file = open(tempf, 'w')
         text_file.write(self.prettify(svg))
         text_file.close()
-        
-        
-    
+
+    def outEdges(self, basename, steps, features):
+        tempd=tempfile.gettempdir();
+        tempf=tempd+os.sep+basename+'_'+steps+'.svg'
+#        print tempf
+        svg = xml.etree.ElementTree.Element('svg')
+        svg.set('xmlns:svg','http://www.w3.org/2000/svg')
+        svg.set('xmlns','http://www.w3.org/2000/svg')
+        svg.set('width','1000.0')
+        svg.set('height','1000.0')
+        group= xml.etree.ElementTree.Element('g')
+        svg.append(group);
+        group.set('transform','translate(0,1000) scale(1,-1)')
+        for edge in edges:
+            path= xml.etree.ElementTree.Element('path')
+            group.append(path)
+            sb='M '+edge.getA().getFeatures()[0]*1000
+            sb=sb+' '+`edge.getA().getFeatures()[1]*1000`+' L '
+            sb=sb+edge.getA().getFeatures()[0]*1000+' '
+            sb=sb+edge.getA().getFeatures()[1]*1000
+            path.set('d',sb)
+            path.set('style','fill:none;fill-opacity:1;stroke:#000000;stroke-opacity:1;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none')
+        text_file = open(tempf, 'w')
+        text_file.write(self.prettify(svg))
+        text_file.close()

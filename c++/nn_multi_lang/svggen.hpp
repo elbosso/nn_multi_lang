@@ -94,7 +94,7 @@ group->setAttribute(XMLString::transcode("transform"),XMLString::transcode("tran
     pRootElement->appendChild(group);
 		for (int i=0;i<features.size();++i)
 		{
-			 cout << i<< " " <<features[i].getFeatures()[0] << " " <<features[i].getFeatures()[1]<< endl;
+//			 cout << i<< " " <<features[i].getFeatures()[0] << " " <<features[i].getFeatures()[1]<< endl;
 DOMElement * path = NULL;
 path = pDOMDocument->createElementNS(XMLString::transcode("http://www.w3.org/2000/svg"),XMLString::transcode("circle"));
  group->appendChild(path);
@@ -113,6 +113,53 @@ path = pDOMDocument->createElementNS(XMLString::transcode("http://www.w3.org/200
  XMLPlatformUtils::Terminate();
 
     }
+    template <typename T>
+   void SvgRenderer<T>::outEdges(string basename, int steps,std::vector<T> edges)
+   {
+   XMLPlatformUtils::Initialize();
+// Pointer to our DOMImplementation.
+DOMImplementation * pDOMImplementation = NULL;
+
+// Get the DOM Implementation (used for creating DOMDocuments).
+// Also see: http://www.w3.org/TR/2000/REC-DOM-Level-2-Core-20001113/core.html
+pDOMImplementation =
+ DOMImplementationRegistry::getDOMImplementation(XMLString::transcode("core"));
+
+DOMDocument * pDOMDocument = NULL;
+
+pDOMDocument = pDOMImplementation->createDocument(XMLString::transcode("http://www.w3.org/2000/svg"), XMLString::transcode("svg"),NULL);
+
+
+DOMElement * pRootElement = NULL;
+pRootElement = pDOMDocument->getDocumentElement();
+
+//pRootElement->setAttribute(XMLString::transcode(""),XMLString::transcode("") );
+pRootElement->setAttribute(XMLString::transcode("width"),XMLString::transcode("1000.0") );
+pRootElement->setAttribute(XMLString::transcode("height"),XMLString::transcode("1000.0") );
+
+DOMElement * group = NULL;
+group = pDOMDocument->createElementNS(XMLString::transcode("http://www.w3.org/2000/svg"),XMLString::transcode("g"));
+group->setAttribute(XMLString::transcode("transform"),XMLString::transcode("translate(0,1000) scale(1,-1)") );
+
+   pRootElement->appendChild(group);
+   for (int i=0;i<edges.size();++i)
+   {
+//      cout << i<< " " <<features[i].getFeatures()[0] << " " <<features[i].getFeatures()[1]<< endl;
+      DOMElement * path = NULL;
+      path = pDOMDocument->createElementNS(XMLString::transcode("http://www.w3.org/2000/svg"),XMLString::transcode("path"));
+      group->appendChild(path);
+      char buf[2048] ;
+      sprintf(buf,"M %f %f L %f %f",edges[i].getA().getFeatures()[0]*1000,edges[i].getA().getFeatures()[1]*1000,edges[i].getB().getFeatures()[0]*1000,edges[i].getB().getFeatures()[1]*1000);
+      path->setAttribute(XMLString::transcode("d"),XMLString::transcode(buf) );
+      path->setAttribute(XMLString::transcode("style"),XMLString::transcode("fill:none;fill-opacity:1;stroke:#000000;stroke-opacity:1;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none") );
+   }
+char path[1024];
+sprintf(path,"/tmp/%s_%d.svg",basename.c_str(),steps);
+   Serialiser_XML_writer(pDOMDocument,path);
+
+XMLPlatformUtils::Terminate();
+
+   }
 
 }
 #endif // SVGGEN_HPP_INCLUDED
