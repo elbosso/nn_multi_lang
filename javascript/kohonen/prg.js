@@ -1,7 +1,7 @@
 main=function(){
   var renderer=new Renderer();
   var generator=new Generator();
-  var nodesperdimension=[5,5];
+  var nodesperdimension=[1,25];
   var dimensionOfFeatures=2;
   var nodes=generator.generate(nodesperdimension, dimensionOfFeatures);
   println(nodes[0]);

@@ -66,10 +66,41 @@ function Generator() {
 	}
 	this.generateSample=function(features)
 	{
+//    this.generateStandardSample(features);
+//    this.generateSampleTriangle(features);
+//      this.generateSampleHole(features)
+      this.generateSampleSnake(features)
+  }
+  this.generateSampleTriangle=function(features)
+	{
 		this.generateStandardSample(features);
 		if(features[1]>features[0])
 		{
 			features[1]*=features[0];//=1-features[1];
 		}
+	}
+  this.generateSampleHole=function(features)
+	{
+    var doit=true;
+    while(doit)
+    {
+		this.generateStandardSample(features);
+    var midoffx=features[0]-0.5;
+    var midoffy=features[1]-0.5;
+    var r=Math.sqrt(midoffx*midoffx+midoffy*midoffy);
+    if(r>0.5)
+      doit=false;
+    }
+	}
+  this.generateSampleSnake=function(features)
+	{
+		this.generateStandardSample(features);
+    if(features[0]>0.5)
+    {
+      if((features[1]>0.2)&&(features[1]<0.6))
+        features[1]+=0.4
+      //if((features[1]>0.6)&&(features[1]<0.8))
+        //features[1]+=0.2
+    }
 	}
 }
