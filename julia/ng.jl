@@ -1,3 +1,5 @@
+# https://learnxinyminutes.com/docs/julia/
+# https://en.wikibooks.org/wiki/Introducing_Julia/Arrays_and_tuples
 using PyPlot
 
 
